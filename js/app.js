@@ -6,10 +6,12 @@ var MIN_X = 0;
 var MAX_X = 404;
 var MIN_Y = 0;
 var MAX_Y = 415;
+var OFFSET = 22;
 var PLAYER_START_X = UNIT_X * 2;
-var PLAYER_START_Y = UNIT_Y * 5;
+var PLAYER_START_Y = UNIT_Y * 5 - OFFSET;
 var COLLISION = 30;
 var NUM_ENEMIES = 5;
+
 
 var player;
 var allEnemies;
@@ -18,7 +20,7 @@ class Enemy {
     constructor() {
         this.sprite = 'images/enemy-bug.png';
         this.x = MIN_X - Math.floor((Math.random() * 5) + 1) * UNIT_X;
-        this.y = Math.floor((Math.random() * 3) + 1) * UNIT_Y;
+        this.y = Math.floor((Math.random() * 3) + 1) * UNIT_Y - OFFSET;
         this.speed = Math.floor((Math.random() * 100) + 100);
     }
 
@@ -27,7 +29,7 @@ class Enemy {
             this.x = this.x + (this.speed * dt);
         } else {
             this.x = MIN_X - Math.floor((Math.random() * 5) + 1) * UNIT_X;
-            this.y = Math.floor((Math.random() * 3) + 1) * UNIT_Y;
+            this.y = Math.floor((Math.random() * 3) + 1) * UNIT_Y - OFFSET;
         }
         if (this.x > player.x - COLLISION && this.x < player.x + COLLISION && this.y === player.y) {
             player.reset();
@@ -43,7 +45,7 @@ class Player {
     constructor() {
         this.sprite = "images/char-boy.png";
         this.x = PLAYER_START_X;
-        this.y = PLAYER_START_Y;    
+        this.y = PLAYER_START_Y;
     }
 
     update(dt) {
@@ -69,7 +71,7 @@ class Player {
                     this.x = this.x + UNIT_X;
                 break;
             case "down":
-                if (this.y < MAX_Y)
+                if (this.y < MAX_Y - OFFSET)
                     this.y = this.y + UNIT_Y;
                 break;
             default:
